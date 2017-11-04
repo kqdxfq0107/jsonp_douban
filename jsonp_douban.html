@@ -21,6 +21,7 @@
 			
 			window.jsonp_douban=function(data){
 				console.log(data);
+				ul.innerHTML='';
 				for(i=0;i<data.subjects.length;i++){
 					var li=document.createElement('li');
 					var str='';
@@ -37,12 +38,6 @@
 					
 					li.innerHTML=str;
 					ul.appendChild(li);
-
-
-					
-
-
-
 				}
 			}
 		</script>
