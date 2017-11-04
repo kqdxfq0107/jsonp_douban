@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jsonp请求豆瓣接口</title>
+	</head>
+	<body>
+		<input type="text"/>
+		<input type="button" value="搜索" />
+		<ul></ul>
+		
+		<script>
+			var inputs=document.querySelectorAll('input');
+			var ul=document.querySelector('ul');
+			
+			inputs[1].onclick=function(){
+				var script=document.createElement('script');
+				script.src='https://api.douban.com/v2/movie/search'+'?q='+inputs[0].value+'&start=0&callback=jsonp_douban';
+				document.body.appendChild(script);
+			}
+			
+			window.jsonp_douban=function(data){
+				console.log(data);
+				for(i=0;i<data.subjects.length;i++){
+					var li=document.createElement('li');
+					var str='';
+					str='<img src="'+data.subjects[i].images.large+'"/><h3>'+data.subjects[i].title+'</h3><p>'+data.subjects[i].genres+'</p>';
+					var casts='';
+					var castsLen=data.subjects[i].casts.length;
+					if(castsLen!=0){
+						for(j=0;j<castsLen;j++){
+							casts+=data.subjects[i].casts[j].name+' / ';
+						}
+						casts=casts.slice(0,casts.length-3);					//去掉最后一个演员后面的/
+					}
+					str+='<p>'+casts+'</p>';	
+					
+					li.innerHTML=str;
+					ul.appendChild(li);
+
+
+					
+
+
+
+				}
+			}
+		</script>
+	</body>
+</html>
